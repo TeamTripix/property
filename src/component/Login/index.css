@@ -1,0 +1,85 @@
+* {
+  transition-duration: 300ms;
+}
+
+.loginBackground {
+  background-color: #e7ebf0;
+  height: 100vh;
+  display: flex;
+  width: 35vw;
+  align-items: center;
+  justify-content: start;
+  position: absolute;
+  z-index: 3;
+}
+
+.loginBackground:before {
+  content: "";
+  background-color: #e7ebf0;
+  height: 100vh;
+  display: flex;
+  width: 35vw;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  position: absolute;
+  transform-origin: top left;
+  transform: skewx(154deg);
+}
+
+.loginStyle {
+  background-color: #fff;
+  height: 26rem;
+  width: 20rem;
+  border-radius: 0.5rem;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, #00000024 0px 1px 1px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+  z-index: 4;
+}
+
+.loginStyle:hover {
+  height: 26.2rem;
+  width: 20.2rem;
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.logoContainer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginText {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #14b8a6;
+}
+
+.loginBtnStyle {
+  margin-top: 2.5rem;
+  background-color: #14b8a6;
+}
+
+.loginBtnStyle:hover {
+  margin-top: 2.5rem;
+  background-color: #0f9b8b;
+}
+
+.backgroundImage {
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  background-image: url(../../assets/image/background.jpg);
+  background-size: cover;
+  z-index: 0;
+}
+
+.backgroundImage::before {
+  content: "";
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  z-index: 1;
+  background-color: #0000007d;
+}
