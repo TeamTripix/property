@@ -2,9 +2,8 @@ import React from "react";
 import Login from "./component/Login";
 import Dashboard from "./component/Dashboard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
-import MyAccount from "./component/MyAccount"
+import MyAccount from "./component/MyAccount";
 
 function App() {
   return (

@@ -1,4 +1,3 @@
-// import "./index.css";
 import * as React from "react";
 import noImage from "../../assets/image/no-image.png";
 import Box from "@mui/material/Box";
@@ -6,6 +5,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function Index(itemData) {
   const { street, city, state, country } = itemData.data.listing.address;
@@ -25,16 +27,22 @@ export default function Index(itemData) {
       />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
+          <Typography component="div" variant="h6">
             {street} {city} {state} {country}
           </Typography>
-          {/* <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
-          >
-            Mac Miller
-          </Typography> */}
+          <Stack direction="row" spacing={1}>
+            {itemData.data.assigned_to_me ? (
+              <Chip
+                size="small"
+                icon={<HomeIcon style={{ color: "#14B8A6" }} />}
+                label="Assigned to me"
+                variant="outlined"
+                sx={{ marginTop: "1rem", color: "#14B8A6" }}
+              />
+            ) : (
+              ""
+            )}
+          </Stack>
         </CardContent>
       </Box>
     </Card>
