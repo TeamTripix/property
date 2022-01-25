@@ -3,6 +3,7 @@ import axios from "axios";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Loader";
+import Alert from "../Alert";
 
 function Index() {
   const navigate = useNavigate();
@@ -10,6 +11,11 @@ function Index() {
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [passwordHidden, setPasswordHidden] = React.useState(false);
+  const [showAlert, setShowAlert] = React.useState({
+    status: false,
+    message: "",
+    behaviour: "",
+  });
 
   const handleUsernameInput = (event) => {
     setUsername(event.target.value);
@@ -36,11 +42,30 @@ function Index() {
       method: "post",
       url: "https://api-dev.contrax.com.au/api/v1/token/",
       data: { username: username, password: password },
-    }).then(function (response) {
-      localStorage.setItem("token", response.data.token);
-      setLoading(false);
-      navigate("/Dashboard");
-    });
+    }).then(
+      function (response) {
+        try {
+          localStorage.setItem("token", response.data.token);
+          setLoading(false);
+          navigate("/Dashboard");
+        } catch (error) {
+          setLoading(false);
+          setShowAlert({
+            status: true,
+            message: "Something went wrong",
+            behaviour: "error",
+          });
+        }
+      },
+      () => {
+        setLoading(false);
+          setShowAlert({
+            status: true,
+            message: "Something went wrong",
+            behaviour: "error",
+          });
+      }
+    );
   };
 
   return (
@@ -136,6 +161,11 @@ function Index() {
           </div>
         </div>
       </div>
+      {showAlert.status ? (
+        <Alert behaviour={showAlert.behaviour} message={showAlert.message} />
+      ) : (
+        ""
+      )}
     </>
   );
 }

@@ -3,14 +3,18 @@ import React, { useState, useEffect } from "react";
 import { Button, DialogActions, TextField } from "@mui/material";
 import Navbar from "../Navbar";
 import axios from "axios";
-// import Link from "react-router-dom"
+import Alert from "../Alert";
 import { useNavigate } from "react-router-dom";
 
 function Index() {
   const navigate = useNavigate();
-
   const [responseData, setResponseData] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [showAlert, setShowAlert] = useState({
+    status: false,
+    message: "",
+    behaviour: "",
+  });
   useEffect(() => {
     let config = {
       headers: {
@@ -30,6 +34,7 @@ function Index() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowAlert({status:false})
     axios({
       method: "put",
       url: "https://api-dev.contrax.com.au/api/v1/me/",
@@ -37,7 +42,21 @@ function Index() {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }).then(function () {});
+    }).then(function (res) {
+      if (res.status === 200) {
+        setShowAlert({
+          status: true,
+          message: "Contact no. changed",
+          behaviour: "success",
+        });
+      } else {
+        setShowAlert({
+          status: true,
+          message: "Network error",
+          behaviour: "error",
+        });
+      }
+    });
   };
   const margin = {
     marginTop: "10px",
@@ -64,7 +83,6 @@ function Index() {
                 sx={margin}
                 fullWidth
                 label="Firm name"
-                // style={{ marginRight: "0.625rem" }}
                 variant="outlined"
                 required={true}
                 value={responseData.firm_name}
@@ -74,7 +92,6 @@ function Index() {
                 sx={margin}
                 fullWidth
                 label="First name"
-                // style={{ marginRight: "0.625rem" }}
                 variant="outlined"
                 required={true}
                 value={responseData.first_name}
@@ -84,7 +101,6 @@ function Index() {
                 sx={margin}
                 fullWidth
                 label="Last name"
-                // style={{ marginRight: "0.625rem" }}
                 variant="outlined"
                 required={true}
                 value={responseData.last_name}
@@ -94,7 +110,6 @@ function Index() {
                 sx={margin}
                 fullWidth
                 label="Email"
-                // style={{ marginRight: "0.625rem" }}
                 variant="outlined"
                 required={true}
                 value={responseData.email}
@@ -104,7 +119,6 @@ function Index() {
                 sx={margin}
                 fullWidth
                 label="Phone number"
-                // style={{ marginRight: "0.625rem" }}
                 variant="outlined"
                 required={true}
                 value={phoneNumber}
@@ -113,10 +127,8 @@ function Index() {
             </div>
             <DialogActions style={{ padding: 0 }}>
               <Button
-                // to="/Dashboard"
                 variant="contained"
                 color="inherit"
-                // style={{ backgroundColor: "#14B8A6" }}
                 onClick={() => {
                   navigate("/Dashboard");
                 }}
@@ -125,7 +137,6 @@ function Index() {
               </Button>
               <Button
                 variant="contained"
-                //   color="primary"
                 type="submit"
                 style={{ backgroundColor: "#14B8A6" }}
               >
@@ -134,6 +145,11 @@ function Index() {
             </DialogActions>
           </form>
         </Container>
+      )}
+      {showAlert.status ? (
+        <Alert behaviour={showAlert.behaviour} message={showAlert.message} />
+      ) : (
+        ""
       )}
     </>
   );
